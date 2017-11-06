@@ -4,7 +4,7 @@
  * @flow
  */
 
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   Platform,
   StyleSheet,
@@ -15,111 +15,90 @@ import {
   Button,
   TouchableHighlight,
   TouchableWithoutFeedback,
-  ScrollView
+  ScrollView,
+  AccessibilityInfo
 } from 'react-native';
+import {StackNavigator, TabNavigator} from 'react-navigation';
+
+// import Register  from './Register'
 
 import Animation from 'lottie-react-native';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Agoora Vamos lá Aqui novamente  tap R on your keyboard to reload,\n' +
-    'Sacudsa or press menu button for dev menu',
-});
+const instructions = Platform.select({ios: 'Press Cmd+R to reload,\nCmd+D or shake for dev menu', android: 'Vamos encontrar um novo amigo pra você'});
 
-import anim from './assets/soda_loader.json';
-
+// const routes = StackNavigator({   Register: { screen: Register }   //
+// Profile: { screen: Profile }, });
 
 export default class App extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      progress: new Animated.Value(0),
+      progress: new Animated.Value(0)
     };
+
   }
 
-
-  
   componentDidMount() {
-    this.animation.play();
-  }
-  
-  componentWillMount(){
-  
+    this
+      .animation
+      .play();
   }
 
-  onPressLearnMore = ()=>{
-    this.animation1.play();
-  }  
+  componentWillMount() {}
+
+  onPressLearnMore = () => {
+    this
+      .animation1
+      .play();
+
+  }
 
   render() {
+    // const { navigate } = this.navigation;
     return (
-     
-     <View style={styles.container}>
-       <StatusBar
-       hidden={true} 
-      />
-        <Text style={styles.welcome}>
-         Não Fique Sozinho
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit App.js
-        </Text>
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text>
 
-      <View>
-      <TouchableWithoutFeedback
-        onPress={this.onPressLearnMore}
+      <View style={styles.container}>
+        <StatusBar hidden={true}/>
         
-      >
-      <View>
+        <View style={styles.title}>
+          <Text style={styles.info}>
+            Não Fique Sozinho
+          </Text>
+          <View style={styles.containerText}>
+            <Text style={styles.infoText}>
+            </Text>
+            <Text style={styles.infoText}>
+              {instructions}
+            </Text>
+            <Text style={styles.infoText}>
+            </Text>
+          </View>
+        </View>
 
-      <Animation
-        ref={animation => { this.animation1 = animation; }}
-        style={{
-          width: 100,
-          height: 100,
-        }}
-        source={require('./assets/star.json')}
-      />
-      </View>
-      </TouchableWithoutFeedback>
-     
-      
+        <View style={styles.animate}>
+          <Animation
+            ref={animation => {
+            this.animation = animation;
+          }}
+            style={{
+            width: 400,
+            height: 400
+          }}
+            source={require('./assets/fail.json')}
+            loop={true}/>
+        </View>
 
+        <View style={styles.buttons}>
+          <View style={styles.buttonPass}>
+            <Button color="#870072" onPress={this.onPressLearnMore} title="Cadastre-se"/>
+          </View>
+          <View style={styles.buttonPass}>
+            <Button color="#870072" onPress={this.onPressLearnMore} title="Login"/>
+          </View>
+        </View>
       </View>
-      <Animation
-        ref={animation => { this.animation = animation; }}
-        style={{
-          width: 300,
-          height: 300,
-        }}
-        source={require('./assets/fail.json')}
-        loop={true}
-      />
-      <View style={styles.buttons}>
-      <View style={styles.buttonPass}>
-        <Button
-          color="#870072"
-          onPress={this.onPressLearnMore}
-          title="Cadastre-se"
-          accessibilityLabel="Cadastre-se"
-        />
-      </View>
-      <View style={styles.buttonPass}>  
-      <Button
-        color="#870072"
-        onPress={this.onPressLearnMore}
-        title="Login"
-        accessibilityLabel="Logar"
-       />
-       </View> 
-       </View>
-      </View>
-     
+
     );
   }
 }
@@ -127,30 +106,42 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#FFFFE0',
+    
+  },
+  containerText: {
   },
   buttons: {
     flex: 1,
-    backgroundColor: '#FFFFE0',
-    // backgroundColor: 'red',
-    flexDirection:'row'
-  
+    flexDirection: 'row',
+    position:'relative', 
   },
-  buttonPass:{
-    flex:1,
+  buttonPass: {
+    flex: 1,
     justifyContent: 'center',
-    margin:7,
+    margin: 7
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+  title: {
+    flex:1,
+    flexDirection:'column',
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+  infoText: {
+    fontSize: 14,
+    textAlign:'center',
+    margin:-20
   },
+  info: {
+    color: '#870072',
+    fontWeight: 'bold',
+    fontSize: 40,
+    margin: 70,
+    textAlign:'center'
+  },
+  animate: {
+    margin:-80,
+    flex: 2,
+    flexDirection: 'column',
+    alignItems:'center'
+  }
+
 });
